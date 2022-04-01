@@ -5,7 +5,6 @@ import Hamburger from "../../../assets/Mask Group 48.svg";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
-  const [modal, setModal] = useState(false);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
   const [hover3, setHover3] = useState(false);
@@ -27,10 +26,6 @@ const Navbar = (props) => {
   function handleHover5() {
     setHover5(!hover5);
   }
-
-  function handleModal() {
-    setModal(!modal);
-  }
   return (
     <div className="navbar h-[100px] bg-black-custom px-9 lg:px-[139px] flex items-center justify-between fixed -top-1 z-10 w-full">
       <div className="logo pl-4 md:pl-0">
@@ -38,13 +33,7 @@ const Navbar = (props) => {
       </div>
       <div className="menu font-chivo font-black text-base text-white flex gap-[18px]">
         <ul
-          className={
-            props.width > 375
-              ? "flex gap-4 justify-center"
-              : modal
-              ? "relative w-[calc(100vw+52px)] top-[280px] -left-[52px] bg-black-custom h-[calc(100vh+100px)]"
-              : "hidden"
-          }
+          className={props.width > 375 ? "flex gap-4 justify-center" : "hidden"}
         >
           <li className="px-2 text-center">
             <div

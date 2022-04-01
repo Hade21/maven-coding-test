@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Logo from "../../../assets/Group 77 mini.svg";
 import SearchIcon from "../../../assets/magnifying-glass.svg";
 import Hamburger from "../../../assets/Mask Group 48.svg";
-import close from "../../../assets/ic_back.svg";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {

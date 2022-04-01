@@ -1,33 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import LogoDesktop from "../../assets/Group 77.svg";
 import LogoMobile from "../../assets/Group 77 mobile.svg";
 import eye from "../../assets/ic_eye_disable.svg";
+import { Link } from "react-router-dom";
 
-const Login = () => {
-  const hasWindow = typeof window !== "undefined";
+const Login = (props) => {
+  const [focusEmail, setFocusEmail] = useState(false);
+  const [focusPass, setFocusPass] = useState(false);
 
-  function getWindowWidth() {
-    const width = hasWindow ? window.innerWidth : null;
-    return width;
+  function handleFocusEmail() {
+    setFocusEmail(!focusEmail);
   }
-
-  const [windowWidth, setWindowWidth] = useState(getWindowWidth());
-
-  useEffect(() => {
-    if (hasWindow) {
-      function handleResize() {
-        setWindowWidth(getWindowWidth());
-      }
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, [hasWindow]);
+  function handleFocusPass() {
+    setFocusPass(!focusPass);
+  }
 
   return (
     <div className="login bg-mobile-login lg:bg-desktop-login w-screen h-screen bg-black text-white flex flex-col lg:flex-row lg:justify-center items-center gap-32 lg:gap-72 overflow-auto">
       <div className="left">
         <img
-          src={windowWidth > 375 ? LogoDesktop : LogoMobile}
+          src={props.width > 375 ? LogoDesktop : LogoMobile}
           alt="Astronaut-Logo"
           className="mx-auto w-fit mt-[60px] lg:mt-0"
         />
@@ -44,44 +36,78 @@ const Login = () => {
           <p className="font-DM-Sans text-sm lg:text-base">
             Let's enjoy your popcorn while you are lay down!
           </p>
-          <div className="w-[312px] h-[50px] lg:w-[400px] lg:h-[60px] email bg-white text-light-grey flex flex-col items-start px-5 py-[11px]">
+          <div
+            className={
+              focusEmail
+                ? "w-[312px] h-[50px] lg:w-[400px] lg:h-[60px] email bg-white text-light-grey flex flex-col items-start px-5 py-[11px] border-b-4 border-moderate-blue transition-colors"
+                : "w-[312px] h-[50px] lg:w-[400px] lg:h-[60px] email bg-white text-light-grey flex flex-col items-start px-5 py-[11px]"
+            }
+          >
             <label
               htmlFor="email-input"
-              className="font-DM-Sans text-[10px] cursor-pointer"
+              className={
+                focusEmail
+                  ? "font-DM-Sans animate-fokus text-[10px] cursor-pointer"
+                  : "font-DM-Sans animate-unfokus text-[24px] cursor-pointer w-full text-left"
+              }
+              onClick={handleFocusEmail}
             >
               Username/Email
             </label>
             <input
               type="email"
               id="email-input"
-              className="text-light-grey focus:outline-none"
+              className={
+                focusEmail
+                  ? "text-light-grey animate-dissappear focus:outline-none bg-transparent w-5/6"
+                  : "hidden"
+              }
+              onBlur={handleFocusEmail}
             />
           </div>
-          <div className="w-[312px] h-[50px] lg:w-[400px] lg:h-[60px] password bg-white text-light-grey flex justify-between px-5 py-[11px]">
+          <div
+            className={
+              focusPass
+                ? "w-[312px] h-[50px] lg:w-[400px] lg:h-[60px] password bg-white text-light-grey flex justify-between px-5 py-[11px] border-b-4 border-moderate-blue transition-colors"
+                : "w-[312px] h-[50px] lg:w-[400px] lg:h-[60px] password bg-white text-light-grey flex justify-between px-5 py-[11px]"
+            }
+          >
             <div className="input flex flex-col items-start">
               <label
                 htmlFor="password-input"
-                className="font-DM-Sans text-[10px] cursor-pointer"
+                className={
+                  focusPass
+                    ? "font-DM-Sans animate-fokus text-[10px] cursor-pointer"
+                    : "font-DM-Sans animate-unfokus text-[24px] cursor-pointer w-5/6"
+                }
+                onClick={handleFocusPass}
               >
                 Password
               </label>
               <input
                 type="password"
                 id="password-input"
-                className="text-light-grey focus:outline-none"
+                className={
+                  focusPass
+                    ? "text-light-grey animate-dissappear focus:outline-none bg-transparent w-full"
+                    : "hidden"
+                }
+                onBlur={handleFocusPass}
               />
             </div>
-            <img src={eye} alt="" className="" />
+            <img src={eye} alt="" className="w-8 cursor-pointer" />
           </div>
           <a href="#" className="font-DM-Sans text-xs self-end">
             Forgot password?
           </a>
-          <button
-            id="sign-in"
-            className="font-DM-Sans text-base px-9 py-[10px] rounded-full bg-light-cyan w-fit mx-auto mb-[71px] lg:mb-0"
-          >
-            Sign In
-          </button>
+          <Link to="/beranda">
+            <button
+              id="sign-in"
+              className="font-DM-Sans text-base px-9 py-[10px] rounded-full bg-light-cyan w-fit mx-auto mb-[71px] lg:mb-0"
+            >
+              Sign In
+            </button>
+          </Link>
         </form>
       </div>
     </div>
